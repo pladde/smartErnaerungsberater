@@ -52,9 +52,11 @@ public class ProductController {
     }
 
     // POST: Wetterdaten importieren
-    @PostMapping("/apiWeather")
+    /*@PostMapping("/apiWeather")
     public String importWeatherData() {
         productService.importWeatherDataFromApi();
         return "Wetterdaten importiert!";
     }
+
+     */
 }

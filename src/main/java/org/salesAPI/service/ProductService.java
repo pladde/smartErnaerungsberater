@@ -1,9 +1,7 @@
 package org.salesAPI.service;
 
 import org.salesAPI.model.Product;
-import org.salesAPI.model.WeatherData;
 import org.salesAPI.repository.ProductRepository;
-import org.salesAPI.repository.WeatherDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private WeatherDataRepository weatherDataRepository;
+    /*@Autowired
+    private WeatherDataRepository weatherDataRepository;*/
 
     // CSV-Import-Daten
     public void importCsvData(String filePath) {
@@ -29,11 +27,11 @@ public class ProductService {
     }
 
     // Wetterdaten von der API importieren
-    public void importWeatherDataFromApi() {
+    /*public void importWeatherDataFromApi() {
         // API-Logik hier implementieren (z.B. ApiWeatherClient verwenden)
         WeatherData weatherData = new WeatherData("Berlin", 15.5, 80.0, LocalDateTime.now());
         weatherDataRepository.save(weatherData);
-    }
+    }*/
 
     // CREATE: Produkt speichern
     public Product saveProduct(Product product) {

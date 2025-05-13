@@ -1,0 +1,16 @@
+<lebensmittelliste>
+  <lebensmittel>
+    <id>201</id>
+    <name>Tomate</name>
+    <kategorie>Gemüse</kategorie>
+    <portionsgroesse>100g</portionsgroesse>
+    <hersteller>Gartenfrisch</hersteller>
+  </lebensmittel>
+  <lebensmittel>
+    <id>202</id>
+    <name>Joghurt</name>
+    <kategorie>Molkereiprodukte</kategorie>
+    <portionsgroesse>150g</portionsgroesse>
+    <hersteller>Frisch & Fein</hersteller>
+  </lebensmittel>
+</lebensmittelliste>

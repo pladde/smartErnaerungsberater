@@ -1,0 +1,18 @@
+{
+  "lebensmittel": [
+    {
+      "id": 101,
+      "name": "Banane",
+      "kategorie": "Obst",
+      "portionsgroesse": "120g",
+      "hersteller": "Tropica"
+    },
+    {
+      "id": 102,
+      "name": "Reis",
+      "kategorie": "Beilage",
+      "portionsgroesse": "200g",
+      "hersteller": "Fernkorn"
+    }
+  ]
+}

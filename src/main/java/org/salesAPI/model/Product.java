@@ -19,9 +19,9 @@ public class Product {
     private String importSource;
     private LocalDateTime importDate;
 
-    // Konstruktoren, Getter und Setter
+    // constructor, getter and setter
 
-    // Standard-Konstruktor
+    // Standard-constructor
     public Product() {}
 
     public Product(String productName, String catergory, int quantity, String manufactor, String importSource, LocalDateTime importDate) {
@@ -36,7 +36,6 @@ public class Product {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -44,23 +43,34 @@ public class Product {
     public String getProductName() {
         return productName;
     }
-
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getCatergory() {
+        return catergory;
+    }
+    public void setCatergory(String catergory) {
+        this.catergory = catergory;
     }
 
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getManufactor() {
+        return manufactor;
+    }
+    public void setManufactor(String manufactor) {
+        this.manufactor = manufactor;
     }
 
     public String getImportSource() {
         return importSource;
     }
-
     public void setImportSource(String importSource) {
         this.importSource = importSource;
     }
@@ -68,7 +78,6 @@ public class Product {
     public LocalDateTime getImportDate() {
         return importDate;
     }
-
     public void setImportDate(LocalDateTime importDate) {
         this.importDate = importDate;
     }

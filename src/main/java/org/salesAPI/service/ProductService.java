@@ -24,7 +24,7 @@ public class ProductService {
     public void importCsvData(String filePath) {
         // CSV-Parsing-Logik hier implementieren (z.B. CsvParser verwenden)
         // Zum Beispiel, nach dem Parsen:
-        Product product = new Product("Cola", 100, "CSV", LocalDateTime.now());
+        Product product = new Product("Cola", "Getraenk", 100, "Coke", "CSV", LocalDateTime.now());
         productRepository.save(product);
     }
 

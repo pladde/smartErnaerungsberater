@@ -13,7 +13,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productName;
+    private String catergory;
     private int quantity;
+    private String manufactor;
     private String importSource;
     private LocalDateTime importDate;
 
@@ -22,9 +24,11 @@ public class Product {
     // Standard-Konstruktor
     public Product() {}
 
-    public Product(String productName, int quantity, String importSource, LocalDateTime importDate) {
+    public Product(String productName, String catergory, int quantity, String manufactor, String importSource, LocalDateTime importDate) {
         this.productName = productName;
+        this.catergory = catergory;
         this.quantity = quantity;
+        this.manufactor = manufactor;
         this.importSource = importSource;
         this.importDate = importDate;
     }

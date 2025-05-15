@@ -6,17 +6,24 @@
 
     <script src="script.js"></script>
 
+    <!--
+    multiple accept=".csv, .json, .xml"
+
+    -->
+
 </head>
 <body>
-
     <div>
         <h1>DUMMY</h1>
-        <div id="dropzone">
-            <form class="form">
+    </div>
+
+    <div>
+        <div>
+            <form id="dropzone" class="form">
                 <p class="dropper">Datei hier hinein ziehen oder auswählen.</p>
-                <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
-                <!--<label class="button" for="fileElem">Dateien wählen</label>-->
+                <input type="file" id="fileElem" accept=".csv, .json, .xml" onchange="saveData(this.files)">
             </form>
+            <button id="send">send</button>
         </div>
 
         <div id="preview"></div>

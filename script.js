@@ -1,3 +1,5 @@
+import { postData } from './fetch.js';
+
 let dataContent;
 
 function saveData(files) {
@@ -43,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("CLICK/found data name: " + dataContent.name);
         if(validateDataFormat(dataContent.name)) {
             alert("Click successfully!");
+
+            if(postData(dataContent)) {
+                console.log("transfer successfully!");
+            }
         }
         else {
             alert("Please insert a valid data-format and try again!");

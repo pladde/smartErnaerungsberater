@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>Smart-Ernaehrungsberater</title>
 
-    <script src="script.js"></script>
-
     <!--
     multiple accept=".csv, .json, .xml"
 
@@ -13,6 +11,7 @@
 
 </head>
 <body>
+<script src="script.js" type="module"></script>
     <div>
         <h1>DUMMY</h1>
     </div>
@@ -20,7 +19,7 @@
     <div>
         <div>
             <form id="dropzone" class="form">
-                <p class="dropper">Datei hier hinein ziehen oder auswählen.</p>
+                <p class="dropper">Datei hier hineinziehen oder auswählen.</p>
                 <input type="file" id="fileElem" accept=".csv, .json, .xml" onchange="saveData(this.files)">
             </form>
             <button id="send">send</button>

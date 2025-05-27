@@ -1,6 +1,6 @@
 let API_BASE_URL = "http://localhost:8080/api";
 
-async function sendFileToServer(file) {
+export async function sendFileToServer(file) {
     let formData = new FormData();
     formData.append('file', file);
 }

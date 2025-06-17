@@ -2,7 +2,7 @@ import { postData } from './upload.js';
 
 let dataContent;
 
-function saveData(files) {
+export function saveData(files) {
     dataContent = files;
     validateDataFormat();
 }
@@ -56,3 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+/*
+document.addEventListener("DOMContentLoaded", function() {
+    let dropzone = document.getElementById("dropzone");
+
+    dropzone.addEventListener("change", function () {
+        let
+        saveData();
+    })
+})
+*/

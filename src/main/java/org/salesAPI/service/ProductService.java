@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.*;
 
 import org.salesAPI.util.CsvParser;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductService {
@@ -19,13 +17,20 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    List<Product> testListe = new ArrayList<>();
+
 
     // CSV-Import-Daten
-    public void importCsvData(String filePath) {
-        // CSV-Parsing-Logik hier implementieren (z.B. CsvParser verwenden)
-        // Zum Beispiel, nach dem Parsen:
-        Product product = new Product("Cola", "Getraenk", 100, "Coke", "CSV", LocalDateTime.now());
-        productRepository.save(product);
+    public void importCsvData(MultipartFile file) {
+
+        // falls keine Tabelle erstellt wurde, muss eine erstellt werden
+
+        Product p = new Product("Testprodukt", "Testkategorie", 5, "Testhersteller", "manual", LocalDateTime.now());
+        productRepository.save(p);
+
+        CsvParser csvParser = new CsvParser();
+        testListe = csvParser.parseCsvToProducts(file);
+        productRepository.saveAll(testListe);
     }
 
     // CREATE: Produkt speichern

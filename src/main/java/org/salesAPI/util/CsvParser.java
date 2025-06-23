@@ -25,11 +25,12 @@ public class CsvParser {
     private static final Logger logger = LoggerFactory.getLogger(CsvParser.class);
 
     private static final String[] CSV_HEADERS = {
-            "productName",
-            "category",
-            "quantity",
-            "manufacturer"
+            "name",
+            "kategorie",
+            "portionsgroesse",
+            "hersteller"
     };
+
 
     public List<Product> parseCsvToProducts(MultipartFile file) {
         Objects.requireNonNull(file, "Die hochgeladene Datei darf nicht null sein.");

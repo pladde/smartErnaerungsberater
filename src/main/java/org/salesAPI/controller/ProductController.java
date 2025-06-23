@@ -4,6 +4,7 @@ import org.salesAPI.model.Product;
 import org.salesAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,17 +47,8 @@ public class ProductController {
 
     // POST: CSV Import
     @PostMapping("/csv")
-    public String importCsvData(@RequestParam("file") String filePath) {
-        productService.importCsvData(filePath);
+    public String importCsvData(@RequestParam("file") MultipartFile file) {
+        productService.importCsvData(file);
         return "CSV Import erfolgreich!";
     }
-
-    // POST: Wetterdaten importieren
-    /*@PostMapping("/apiWeather")
-    public String importWeatherData() {
-        productService.importWeatherDataFromApi();
-        return "Wetterdaten importiert!";
-    }
-
-     */
 }

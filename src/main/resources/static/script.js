@@ -1,11 +1,13 @@
+import { postData } from './upload.js';
+
 let dataContent;
 
-function saveData(files) {
+export function saveData(files) {
     dataContent = files;
     validateDataFormat();
 }
 
-// Prüft ob es sich um ein erlaubes Datenformat handelt
+// Prüft, ob es sich um ein erlaubes Datenformat handelt
 function validateDataFormat() {
 
     let foundDataName = dataContent[0].name;
@@ -34,18 +36,34 @@ function validateDataFormat() {
     return formatIsAllowed;
 }
 
+// Eventlistener für den send-Button
 document.addEventListener("DOMContentLoaded", function () {
     let sendButton = document.getElementById("send");
 
     sendButton.addEventListener("click", function () {
-        // Code zum übermitteln hier
+        // Code zum Übermitteln hier
 
         console.log("CLICK/found data name: " + dataContent.name);
         if(validateDataFormat(dataContent.name)) {
             alert("Click successfully!");
+
+            if(postData(dataContent)) {
+                console.log("transfer successfully!");
+            }
         }
         else {
             alert("Please insert a valid data-format and try again!");
         }
     });
 });
+
+/*
+document.addEventListener("DOMContentLoaded", function() {
+    let dropzone = document.getElementById("dropzone");
+
+    dropzone.addEventListener("change", function () {
+        let
+        saveData();
+    })
+})
+*/

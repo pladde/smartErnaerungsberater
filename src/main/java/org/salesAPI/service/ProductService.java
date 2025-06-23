@@ -11,14 +11,14 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Arrays;
 
+import org.salesAPI.util.CsvParser;
+
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
-    /*@Autowired
-    private WeatherDataRepository weatherDataRepository;*/
 
     // CSV-Import-Daten
     public void importCsvData(String filePath) {
@@ -27,13 +27,6 @@ public class ProductService {
         Product product = new Product("Cola", "Getraenk", 100, "Coke", "CSV", LocalDateTime.now());
         productRepository.save(product);
     }
-
-    // Wetterdaten von der API importieren
-    /*public void importWeatherDataFromApi() {
-        // API-Logik hier implementieren (z.B. ApiWeatherClient verwenden)
-        WeatherData weatherData = new WeatherData("Berlin", 15.5, 80.0, LocalDateTime.now());
-        weatherDataRepository.save(weatherData);
-    }*/
 
     // CREATE: Produkt speichern
     public Product saveProduct(Product product) {

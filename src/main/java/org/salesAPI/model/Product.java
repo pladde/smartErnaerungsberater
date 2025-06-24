@@ -5,7 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import lombok.Data;
 
+@Data
 @Entity
 public class Product {
 
@@ -13,72 +15,22 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productName;
-    private String catergory;
+    private String category;
     private int quantity;
-    private String manufactor;
+    private String manufacturer;
     private String importSource;
     private LocalDateTime importDate;
 
-    // constructor, getter and setter
 
     // Standard-constructor
     public Product() {}
 
-    public Product(String productName, String catergory, int quantity, String manufactor, String importSource, LocalDateTime importDate) {
+    public Product(String productName, String category, int quantity, String manufacturer, String importSource, LocalDateTime importDate) {
         this.productName = productName;
-        this.catergory = catergory;
+        this.category = category;
         this.quantity = quantity;
-        this.manufactor = manufactor;
+        this.manufacturer = manufacturer;
         this.importSource = importSource;
-        this.importDate = importDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getCatergory() {
-        return catergory;
-    }
-    public void setCatergory(String catergory) {
-        this.catergory = catergory;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getManufactor() {
-        return manufactor;
-    }
-    public void setManufactor(String manufactor) {
-        this.manufactor = manufactor;
-    }
-
-    public String getImportSource() {
-        return importSource;
-    }
-    public void setImportSource(String importSource) {
-        this.importSource = importSource;
-    }
-
-    public LocalDateTime getImportDate() {
-        return importDate;
-    }
-    public void setImportDate(LocalDateTime importDate) {
         this.importDate = importDate;
     }
 }

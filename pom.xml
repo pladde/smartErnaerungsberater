@@ -29,7 +29,9 @@
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -59,14 +61,19 @@
             <artifactId>mariadb-java-client</artifactId>
         </dependency>
 
-        <!-- Lombok (vereinfachte Code-Schreibweise) -->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
+        <!-- CSV-Parser -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.12.0</version>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

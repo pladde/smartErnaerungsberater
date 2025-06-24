@@ -31,7 +31,6 @@ public class CsvParser {
             "hersteller"
     };
 
-
     public List<Product> parseCsvToProducts(MultipartFile file) {
         Objects.requireNonNull(file, "Die hochgeladene Datei darf nicht null sein.");
         if (file.isEmpty()) {
@@ -41,16 +40,17 @@ public class CsvParser {
         List<Product> products = new ArrayList<>();
 
         CSVFormat csvFormat = CSVFormat.DEFAULT
-                .withFirstRecordAsHeader()
-                .withIgnoreHeaderCase()
-                .withTrim()
-                .withDelimiter(',')
-                .withQuote('"')
-                .withAllowMissingColumnNames(true);
+                .withFirstRecordAsHeader() // Wichtig, um die Header-Zeile zu überspringen
+                .withIgnoreHeaderCase()    // Groß-/Kleinschreibung der Header wird ignoriert
+                .withTrim()                // Leerzeichen an den Enden werden entfernt
+                .withDelimiter(',')        // Trennzeichen ist ein Komma
+                .withQuote('"')            // Anführungszeichen für Felder mit Kommas etc.
+                .withAllowMissingColumnNames(true); // Vorsicht: Wenn ein essentieller Header fehlt, kann das zu Fehlern beim Zugriff führen
 
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
              CSVParser csvParser = new CSVParser(fileReader, csvFormat)) {
 
+            // Überprüfung, ob alle erforderlichen Header vorhanden sind
             List<String> foundHeadersNormalized = csvParser.getHeaderNames().stream()
                     .map(String::toLowerCase)
                     .collect(Collectors.toList());
@@ -77,25 +77,26 @@ public class CsvParser {
             for (CSVRecord csvRecord : csvParser) {
                 long recordNumber = csvRecord.getRecordNumber();
                 try {
-                    Product product = new Product();
-                    product.setProductName(csvRecord.get("productName"));
-                    product.setCategory(csvRecord.get("category"));
-                    product.setQuantity(Integer.parseInt(csvRecord.get("quantity")));
-                    product.setManufacturer(csvRecord.get("manufacturer"));
 
+                    Product product = new Product();
+
+                    product.setProductName(csvRecord.get("name"));
+                    product.setCategory(csvRecord.get("kategorie"));
+                    // Die "portionsgroesse" enthält "g". Nur die Zahl wird heir geparst
+                    String quantityString = csvRecord.get("portionsgroesse").replaceAll("[^\\d.]", ""); // Entfernt alles außer Zahlen und Punkte
+                    product.setQuantity(Integer.parseInt(quantityString));
+                    product.setManufacturer(csvRecord.get("hersteller"));
                     product.setImportSource("CSV_Uploaded");
                     product.setImportDate(LocalDateTime.now());
 
                     products.add(product);
 
                 } catch (NumberFormatException e) {
-                    logger.warn("WARNUNG: Ungültige Zahl für 'quantity' in CSV-Zeile {} ('{}'). Datensatz wird übersprungen. Fehler: {}",
-                            recordNumber, csvRecord.get("quantity"), e.getMessage());
-                } catch (DateTimeParseException e) {
-                    logger.warn("WARNUNG: Ungültiges Datumsformat in CSV-Zeile {}. Datensatz wird übersprungen. Fehler: {}",
-                            recordNumber, e.getMessage());
+                    logger.warn("WARNUNG: Ungültige Zahl für 'portionsgroesse' in CSV-Zeile {} ('{}'). Datensatz wird übersprungen. Fehler: {}",
+                            recordNumber, csvRecord.get("portionsgroesse"), e.getMessage());
                 } catch (IllegalArgumentException e) {
-                    logger.warn("WARNUNG: Fehler beim Zugriff auf CSV-Spalte in Zeile {}. Möglicherweise fehlende Spalte. Datensatz wird übersprungen. Fehler: {}",
+
+                    logger.warn("WARNUNG: Fehler beim Zugriff auf CSV-Spalte in Zeile {}. Möglicherweise fehlende Spalte oder falsch benannt. Datensatz wird übersprungen. Fehler: {}",
                             recordNumber, e.getMessage());
                 } catch (Exception e) {
                     logger.error("FEHLER: Unerwarteter Fehler beim Parsen von CSV-Zeile {}. Datensatz wird übersprungen. Fehler: {}",

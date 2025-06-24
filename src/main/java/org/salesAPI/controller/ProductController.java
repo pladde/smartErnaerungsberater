@@ -47,8 +47,8 @@ public class ProductController {
 
     // POST: CSV Import
     @PostMapping("/csv")
-    public String importCsvData(@RequestParam("file") MultipartFile file) {
-        productService.importCsvData(file);
+    public String uploadCsv(@RequestParam("file") MultipartFile file) {
+        productService.importCSV(file);
         return "CSV Import erfolgreich!";
     }
 }

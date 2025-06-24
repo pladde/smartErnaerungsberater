@@ -5,7 +5,6 @@ import org.salesAPI.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import org.salesAPI.util.CsvParser;
@@ -17,18 +16,13 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CsvParser csvParser;
+
     List<Product> testListe = new ArrayList<>();
 
-
     // CSV-Import-Daten
-    public void importCsvData(MultipartFile file) {
-
-        // falls keine Tabelle erstellt wurde, muss eine erstellt werden
-
-        Product p = new Product("Testprodukt", "Testkategorie", 5, "Testhersteller", "manual", LocalDateTime.now());
-        productRepository.save(p);
-
-        CsvParser csvParser = new CsvParser();
+    public void importCSV(MultipartFile file) {
         testListe = csvParser.parseCsvToProducts(file);
         productRepository.saveAll(testListe);
     }

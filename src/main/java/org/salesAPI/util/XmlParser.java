@@ -21,16 +21,12 @@ public class XmlParser {
 
     private static final Logger logger = LoggerFactory.getLogger(XmlParser.class);
     private final XmlMapper xmlMapper;
-    private final ObjectMapper jsonMapper; // For converting JsonNode to Product
+    private final ObjectMapper jsonMapper;
 
     public XmlParser() {
         this.xmlMapper = new XmlMapper();
         this.jsonMapper = new ObjectMapper();
-        // Wenn ein Feld in der Java-Klasse nicht in der XML vorhanden ist,
-        // und es nicht @JsonIgnore ist, würde dies einen Fehler werfen.
-        // Mit dieser Einstellung werden diese Fehler vermieden.
         this.xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // Ermöglicht das Parsen von XML-Dateien, selbst wenn sie keine explizite XML-Deklaration haben
         this.xmlMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
     }
 
@@ -43,35 +39,31 @@ public class XmlParser {
         List<Product> parsedProducts = new ArrayList<>();
 
         try {
-            // Lese die gesamte Datei als String
             String xmlContent = new String(file.getBytes());
-            logger.debug("XML Content: \\n{}", xmlContent); // Log the XML content
+            logger.debug("XML Content: \\n{}", xmlContent);
 
-            // Parse the XML into a JsonNode tree
             JsonNode root = xmlMapper.readTree(xmlContent);
 
-            // Navigate to the 'lebensmittel' elements
-            JsonNode lebensmittelList = root.get("lebensmittelliste").get("lebensmittel");
-            if (lebensmittelList.isArray()) {
-                for (JsonNode lebensmittelNode : lebensmittelList) {
+            JsonNode lebensmittelNodes = root.get("lebensmittel");
+
+            if (lebensmittelNodes != null && lebensmittelNodes.isArray()) {
+                for (JsonNode lebensmittelNode : lebensmittelNodes) {
                     try {
-                        // Manually extract the fields from the JsonNode and map them to Product
                         Product product = new Product();
                         product.setProductName(lebensmittelNode.get("name").asText());
                         product.setCategory(lebensmittelNode.get("kategorie").asText());
 
-                        // Handle portionsgroesse
                         String portionsgroesse = lebensmittelNode.get("portionsgroesse").asText();
                         if (portionsgroesse != null && !portionsgroesse.isEmpty()) {
                             String numericString = portionsgroesse.replaceAll("[^\\d.]", "");
                             if (!numericString.isEmpty()) {
                                 product.setQuantity(Integer.parseInt(numericString));
                             } else {
-                                product.setQuantity(0); // Default value
+                                product.setQuantity(0);
                                 logger.warn("Ungültige Zahl für 'portionsgroesse'. Setze Menge auf 0.");
                             }
                         } else {
-                            product.setQuantity(0); // Default value
+                            product.setQuantity(0);
                             logger.warn("'portionsgroesse' ist leer. Setze Menge auf 0.");
                         }
 
@@ -83,10 +75,33 @@ public class XmlParser {
                         logger.warn("WARNUNG: Fehler beim Verarbeiten eines Lebensmittel-Elements. Datensatz wird übersprungen. Fehler: {}", e.getMessage());
                     }
                 }
+            } else if (lebensmittelNodes != null && !lebensmittelNodes.isArray() && lebensmittelNodes.isObject()) {
+                try {
+                    Product product = new Product();
+                    product.setProductName(lebensmittelNodes.get("name").asText());
+                    product.setCategory(lebensmittelNodes.get("kategorie").asText());
+                    String portionsgroesse = lebensmittelNodes.get("portionsgroesse").asText();
+                    if (portionsgroesse != null && !portionsgroesse.isEmpty()) {
+                        String numericString = portionsgroesse.replaceAll("[^\\d.]", "");
+                        if (!numericString.isEmpty()) {
+                            product.setQuantity(Integer.parseInt(numericString));
+                        } else {
+                            product.setQuantity(0);
+                            logger.warn("Ungültige Zahl für 'portionsgroesse'. Setze Menge auf 0.");
+                        }
+                    } else {
+                        product.setQuantity(0);
+                        logger.warn("'portionsgroesse' ist leer. Setze Menge auf 0.");
+                    }
+                    product.setManufacturer(lebensmittelNodes.get("hersteller").asText());
+                    parsedProducts.add(product);
+                } catch (Exception e) {
+                    logger.warn("WARNUNG: Fehler beim Verarbeiten eines EINZELNEN Lebensmittel-Elements. Datensatz wird übersprungen. Fehler: {}", e.getMessage());
+                }
+            } else {
+                logger.error("FEHLER: 'lebensmittel'-Element(e) wurden nicht gefunden oder sind nicht im erwarteten Format (Array/Object).");
             }
 
-
-            // Setze Import-Metadaten für jedes Produkt
             for (Product product : parsedProducts) {
                 product.setImportSource("XML_Uploaded");
                 product.setImportDate(LocalDateTime.now());

@@ -2,6 +2,7 @@ package org.salesAPI.service;
 
 import org.salesAPI.model.Product;
 import org.salesAPI.repository.ProductRepository;
+import org.salesAPI.util.XmlParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,25 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
+            private ProductRepository productRepository;
 
     @Autowired
-    private CsvParser csvParser;
+            private CsvParser csvParser;
+
+    @Autowired
+            private XmlParser xmlParser;
 
     List<Product> testListe = new ArrayList<>();
 
     // CSV-Import-Daten
     public void importCSV(MultipartFile file) {
         testListe = csvParser.parseCsvToProducts(file);
+        productRepository.saveAll(testListe);
+    }
+
+    // XML Import Daten
+    public void importXml(MultipartFile file) {
+        testListe = xmlParser.parseXmlToProducts(file);
         productRepository.saveAll(testListe);
     }
 
@@ -61,4 +71,6 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+
 }

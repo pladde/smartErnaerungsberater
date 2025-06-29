@@ -72,6 +72,13 @@
             <artifactId>commons-csv</artifactId>
             <version>1.12.0</version>
         </dependency>
+
+        <!-- XML Parser-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

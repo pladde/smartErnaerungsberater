@@ -51,4 +51,11 @@ public class ProductController {
         productService.importCSV(file);
         return "CSV Import erfolgreich!";
     }
+
+    // POST: XML Import
+    @PostMapping("/xml")
+    public String uploadXml(@RequestParam("file") MultipartFile file) {
+        productService.importXml(file);
+        return "XML Import erfolgreich!";
+    }
 }

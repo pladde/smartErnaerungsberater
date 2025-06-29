@@ -45,10 +45,24 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    // POST: CSV Import
+    // POST: CSV import
     @PostMapping("/csv")
     public String uploadCsv(@RequestParam("file") MultipartFile file) {
         productService.importCSV(file);
         return "CSV Import erfolgreich!";
+    }
+
+    // POST: XML import
+    @PostMapping("/xml")
+    public String uploadXml(@RequestParam("file") MultipartFile file) {
+        productService.importXml(file);
+        return "XML Import erfolgreich!";
+    }
+
+    // POST: Json import
+    @PostMapping("/json")
+    public String uploadJson(@RequestParam("file") MultipartFile file) {
+        productService.importJson(file);
+        return "JSON Import erfolgreich!";
     }
 }

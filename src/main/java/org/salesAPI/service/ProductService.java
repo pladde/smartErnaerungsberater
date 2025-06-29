@@ -8,22 +8,42 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import org.salesAPI.util.CsvParser;
+import org.salesAPI.util.XmlParser;
+import org.salesAPI.util.JsonParser;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductService {
 
     @Autowired
-    private ProductRepository productRepository;
+            private ProductRepository productRepository;
 
     @Autowired
-    private CsvParser csvParser;
+            private CsvParser csvParser;
+
+    @Autowired
+            private XmlParser xmlParser;
+
+    @Autowired
+            private JsonParser jsonParser;
 
     List<Product> testListe = new ArrayList<>();
 
     // CSV-Import-Daten
     public void importCSV(MultipartFile file) {
         testListe = csvParser.parseCsvToProducts(file);
+        productRepository.saveAll(testListe);
+    }
+
+    // XML Import Daten
+    public void importXml(MultipartFile file) {
+        testListe = xmlParser.parseXmlToProducts(file);
+        productRepository.saveAll(testListe);
+    }
+
+    public void importJson(MultipartFile file) {
+        testListe = jsonParser.parseJsonToProducts(file);
         productRepository.saveAll(testListe);
     }
 
@@ -61,4 +81,6 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+
 }
